@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Corsi, conferenze e presentazioni di Spazio 23 — Roma, via di Monte del Gallo 23. Ingresso libero, si prenota con un messaggio.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Spazio 23">
+<meta property="og:title" content="Spazio 23 — il calendario degli appuntamenti">
+<meta property="og:description" content="Corsi, conferenze e presentazioni. Roma, via di Monte del Gallo 23. Ingresso libero: per esserci basta un messaggio.">
+<meta property="og:image" content="https://diariovolante-afk.github.io/spazio23/anteprima.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://diariovolante-afk.github.io/spazio23/">
+<meta property="og:locale" content="it_IT">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="anteprima.png">
+<style>
+  html{color-scheme:light dark}
+  body{margin:0}
+  img{max-width:100%}
+  [hidden]{display:none!important}
+</style>
+<title>Le serate di Spazio23</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --carta:#E9E5DA;--carta-alta:#F3F0E8;--riga:#CFC7B4;--riga-forte:#A2977F;
+    --inchiostro:#23252C;--lieve:#5D5E64;--oro:#856220;--rubrica:#A63A2B;
+    --verde:#3C6647;--ombra:rgba(35,37,44,.09);--velo:rgba(35,37,44,.05);
+    --t-astro:#3C4E9B;--t-medita:#3C6647;--t-yoga:#1E5B59;--t-quaderni:#6E5019;
+    --t-conferenza:#A63A2B;--t-lab:#6A3A7A;--t-libro:#6B4A2F;--t-openday:#7E4B12;
+    --t-viaggio:#2B5E8A;--t-altro:#5D5E64;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --carta:#151A24;--carta-alta:#1D2431;--riga:#2E3748;--riga-forte:#4B5771;
+      --inchiostro:#EAE4D6;--lieve:#9BA3B4;--oro:#D0AA5E;--rubrica:#D9705C;
+      --verde:#7FB08C;--ombra:rgba(0,0,0,.35);--velo:rgba(255,255,255,.05);
+      --t-astro:#94A6F0;--t-medita:#7FB08C;--t-yoga:#6FC0BE;--t-quaderni:#D0AA5E;
+      --t-conferenza:#E99684;--t-lab:#C193D2;--t-libro:#C7A27A;--t-openday:#E8A860;
+      --t-viaggio:#82B6DD;--t-altro:#9BA3B4;
+    }
+  }
+  :root[data-theme="dark"]{
+    --carta:#151A24;--carta-alta:#1D2431;--riga:#2E3748;--riga-forte:#4B5771;
+    --inchiostro:#EAE4D6;--lieve:#9BA3B4;--oro:#D0AA5E;--rubrica:#D9705C;
+    --verde:#7FB08C;--ombra:rgba(0,0,0,.35);--velo:rgba(255,255,255,.05);
+    --t-astro:#94A6F0;--t-medita:#7FB08C;--t-yoga:#6FC0BE;--t-quaderni:#D0AA5E;
+    --t-conferenza:#E99684;--t-lab:#C193D2;--t-libro:#C7A27A;--t-openday:#E8A860;
+    --t-viaggio:#82B6DD;--t-altro:#9BA3B4;
+  }
+  .c-astro{color:var(--t-astro)}.c-medita{color:var(--t-medita)}.c-yoga{color:var(--t-yoga)}
+  .c-quaderni{color:var(--t-quaderni)}.c-conferenza{color:var(--t-conferenza)}
+  .c-lab{color:var(--t-lab)}.c-libro{color:var(--t-libro)}.c-openday{color:var(--t-openday)}
+  .c-viaggio{color:var(--t-viaggio)}.c-altro{color:var(--t-altro)}
+
+  *{box-sizing:border-box}
+  body{background:var(--carta);color:var(--inchiostro);margin:0;
+    font-family:"EB Garamond",Georgia,"Times New Roman",serif;font-size:17.5px;line-height:1.55}
+  .foglio{max-width:1280px;margin:0 auto;padding-inline:20px;padding-block:36px 80px}
+
+  .testata{border-bottom:2px solid var(--inchiostro);padding-bottom:18px;
+    display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between}
+  .marchio{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--oro);margin:0 0 10px}
+  h1{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;
+    font-size:clamp(34px,7.4vw,56px);line-height:1;margin:0;text-wrap:balance}
+  .occhiello{margin:12px 0 0;max-width:34em;color:var(--lieve);font-style:italic}
+  .cambia{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;padding:9px 16px;cursor:pointer;background:transparent;
+    color:var(--inchiostro);border:1px solid var(--riga-forte);display:flex;gap:8px;align-items:center}
+  .cambia:hover{background:var(--inchiostro);color:var(--carta);border-color:var(--inchiostro)}
+  .cambia svg{width:15px;height:15px}
+  .filetto{border-bottom:1px solid var(--riga);margin-bottom:34px;padding-top:3px}
+
+  .sezione{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--lieve);display:flex;align-items:center;gap:12px;margin:0 0 6px}
+  .sezione::after{content:"";flex:1;border-bottom:1px solid var(--riga)}
+
+  .serata{display:grid;grid-template-columns:96px 38px 1fr;gap:4px 20px;
+    padding:26px 0;border-bottom:1px solid var(--riga)}
+  .data{text-align:center;padding-top:4px}
+  .data .giorno{font-family:"Cormorant Garamond",Georgia,serif;font-size:46px;line-height:.92;
+    display:block;font-variant-numeric:tabular-nums}
+  .data .mese{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--lieve);display:block;margin-top:5px}
+  .data .anno{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--riga-forte);display:block}
+  .serata .segno{width:32px;height:32px;margin-top:8px}
+  .titolo{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(24px,4.4vw,31px);
+    line-height:1.12;margin:0 0 6px;text-wrap:balance}
+  .relatori{font-style:italic;margin:0 0 10px}
+  .dati{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--lieve);
+    display:flex;flex-wrap:wrap;gap:4px 14px;margin-bottom:14px}
+  .racconto{margin:0 0 14px;max-width:38em}
+  .insieme{font-size:15.5px;color:var(--lieve);margin:0 0 14px}
+  .prenota{display:inline-flex;gap:8px;align-items:center;font-family:"IBM Plex Mono",monospace;
+    font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;padding:11px 22px;
+    text-decoration:none;background:var(--inchiostro);color:var(--carta);
+    border:1px solid var(--inchiostro)}
+  .prenota:hover{background:transparent;color:var(--inchiostro)}
+  .prenota:focus-visible{outline:2px solid var(--oro);outline-offset:3px}
+  .prenota svg{width:16px;height:16px}
+
+  .corsi{display:flex;flex-direction:column;margin-bottom:34px}
+  .corso{display:grid;grid-template-columns:30px 52px 62px 1fr;gap:0 14px;align-items:center;
+    padding:11px 0;border-bottom:1px solid var(--riga)}
+  .corso .segno{width:24px;height:24px}
+  .corso .gg{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--rubrica)}
+  .corso .oo{font-family:"IBM Plex Mono",monospace;font-size:13px;font-variant-numeric:tabular-nums}
+  .corso .cosa{font-size:19px}
+  .corso .chi{font-style:italic;color:var(--lieve);font-size:16px}
+
+  .mese-testata{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+  .mese-nome{font-family:"Cormorant Garamond",Georgia,serif;font-size:34px;line-height:1;
+    text-transform:capitalize;text-align:center;flex:1;min-width:6em;order:2}
+  .freccia{background:transparent;border:1px solid var(--riga-forte);color:var(--inchiostro);
+    min-height:42px;padding:0 14px;cursor:pointer;font-size:19px;line-height:1;
+    display:flex;align-items:center;gap:8px}
+  #mese-prima{order:1}
+  #mese-dopo{order:3}
+  #mese-oggi{order:4;width:100%}
+  .freccia .etich{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--lieve)}
+  .freccia:hover{background:var(--inchiostro);color:var(--carta);border-color:var(--inchiostro)}
+  .freccia:hover .etich{color:var(--carta)}
+  @media (min-width:761px){ #mese-oggi{width:auto;order:5;margin-left:8px} .mese-nome{flex:0 1 auto;min-width:8em} }
+  .oggi-btn{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;padding:10px 16px;background:transparent;color:var(--inchiostro);
+    border:1px solid var(--riga-forte);cursor:pointer}
+  .oggi-btn:hover{background:var(--inchiostro);color:var(--carta)}
+
+  .griglia{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--riga-forte);
+    border:1px solid var(--riga-forte)}
+  .intestazione-gg{background:var(--carta);padding:10px 12px;
+    font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--inchiostro);font-weight:500}
+  .intestazione-gg.fine{color:var(--rubrica)}
+  .cella{background:var(--carta-alta);min-height:168px;padding:10px;display:flex;
+    flex-direction:column;gap:6px}
+  .cella.festivo{background:var(--carta)}
+  .cella.fuori{background:var(--carta);opacity:.35}
+  .cella.oggi{box-shadow:inset 0 0 0 3px var(--rubrica)}
+  .cella .numero{font-family:"IBM Plex Mono",monospace;font-size:17px;color:var(--inchiostro);
+    font-variant-numeric:tabular-nums;line-height:1.1}
+  .cella.oggi .numero{background:var(--rubrica);color:var(--carta-alta);border-radius:999px;
+    width:30px;height:30px;display:flex;align-items:center;justify-content:center;
+    font-size:15px;margin:-2px 0 2px}
+
+  .pastiglia{display:grid;grid-template-columns:18px 1fr;gap:2px 7px;text-align:left;width:100%;
+    background:var(--velo);background:color-mix(in srgb, currentColor 15%, transparent);
+    border:0;border-left:4px solid currentColor;padding:7px 8px;cursor:pointer;
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.3}
+  .pastiglia:hover{background:color-mix(in srgb, currentColor 32%, transparent)}
+  .pastiglia svg{width:18px;height:18px;flex:none;align-self:center}
+  .pastiglia .ora{font-family:"IBM Plex Mono",monospace;font-size:13.5px;color:currentColor;
+    font-variant-numeric:tabular-nums;font-weight:500;align-self:center;letter-spacing:.02em}
+  .pastiglia .testo{grid-column:1/-1;color:var(--inchiostro);font-size:14.5px;font-weight:500;
+    min-width:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;
+    overflow:hidden;hyphens:auto}
+  .pastiglia.corso .testo{font-weight:400;font-style:italic}
+  .ancora{background:none;border:0;padding:2px 4px;cursor:pointer;color:var(--lieve);
+    font-family:"IBM Plex Mono",monospace;font-size:12px;text-align:left}
+  .ancora:hover{color:var(--oro)}
+
+  .blocchi{display:flex;flex-direction:column;gap:12px}
+  .blocco{background:var(--carta-alta);border:1px solid var(--riga);padding:14px;
+    display:grid;grid-template-columns:58px 1fr;gap:6px 14px}
+  .blocco.oggi{border-color:var(--rubrica);border-width:2px}
+  .blocco .bg-data{text-align:center}
+  .blocco .bg-num{font-family:"Cormorant Garamond",Georgia,serif;font-size:34px;line-height:1;display:block}
+  .blocco .bg-gg{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--lieve);display:block;margin-top:3px}
+  .blocco .bg-eventi{display:flex;flex-direction:column;gap:8px}
+  .blocco .pastiglia .testo{-webkit-line-clamp:3;font-size:16px}
+
+  .legenda{display:flex;flex-wrap:wrap;gap:10px 20px;margin:18px 0 0;
+    font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--lieve)}
+  .legenda span{display:flex;align-items:center;gap:7px}
+  .legenda svg{width:18px;height:18px}
+
+  .nessuna,.vuoto{padding:30px 0;color:var(--lieve);font-style:italic;border-bottom:1px solid var(--riga)}
+  .coda{margin-top:34px;padding:20px;background:var(--carta-alta);border:1px solid var(--riga);
+    border-left:4px solid var(--oro)}
+  .coda p{margin:0}
+  .coda .scritta{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--oro);margin-bottom:6px}
+  .colofone{margin-top:40px;padding-top:16px;border-top:1px solid var(--riga);
+    font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--riga-forte);
+    display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:center}
+
+  dialog{border:1px solid var(--riga-forte);background:var(--carta-alta);color:var(--inchiostro);
+    padding:0;max-width:520px;width:calc(100% - 32px);box-shadow:0 18px 50px var(--ombra)}
+  dialog::backdrop{background:rgba(10,12,18,.55)}
+  .scheda{padding:26px}
+  .scheda .chiudi{float:right;background:none;border:0;cursor:pointer;color:var(--lieve);
+    font-size:22px;line-height:1;padding:0 4px}
+  .scheda .chiudi:hover{color:var(--rubrica)}
+
+  @media (max-width:760px){ .griglia,.intestazione-gg{display:none} }
+  @media (min-width:761px){ .blocchi{display:none} }
+  @media (max-width:560px){
+    .serata{grid-template-columns:70px 28px 1fr;gap:4px 12px}
+    .serata .segno{width:24px;height:24px}
+    .data .giorno{font-size:34px}
+    .corso{grid-template-columns:26px 44px 1fr;gap:2px 10px}
+    .corso .oo{grid-column:2}
+    .corso .cosa{grid-column:3;grid-row:1}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+</head>
+<body>
+<div class="foglio">
+  <header class="testata">
+    <div>
+      <p class="marchio">Spazio23</p>
+      <h1>Le serate di Spazio23</h1>
+      <p class="occhiello">Corsi, conferenze e presentazioni. Ingresso libero: per esserci basta un messaggio.</p>
+    </div>
+    <button class="cambia" id="btn-vista"></button>
+  </header>
+  <div class="filetto"></div>
+
+  <div id="vista-lista">
+    <h2 class="sezione">Ogni settimana</h2>
+    <div class="corsi" id="corsi"></div>
+    <h2 class="sezione">Prossimi appuntamenti</h2>
+    <div id="serate"></div>
+  </div>
+
+  <div id="vista-mese" hidden>
+    <div class="mese-testata">
+      <button class="freccia" id="mese-prima" aria-label="Mese precedente">
+        <span aria-hidden="true">‹</span><span class="etich" id="etich-prima"></span>
+      </button>
+      <span class="mese-nome" id="mese-nome"></span>
+      <button class="freccia" id="mese-dopo" aria-label="Mese successivo">
+        <span class="etich" id="etich-dopo"></span><span aria-hidden="true">›</span>
+      </button>
+      <button class="oggi-btn" id="mese-oggi">Torna a oggi</button>
+    </div>
+    <div class="griglia" id="griglia"></div>
+    <div class="blocchi" id="blocchi"></div>
+    <div class="legenda" id="legenda"></div>
+  </div>
+
+  <div class="coda">
+    <p class="scritta">Per esserci</p>
+    <p>Premi <em>Prenota un posto</em> sull'appuntamento che ti interessa: si apre WhatsApp con il messaggio già pronto, tu premi invio. I posti sono limitati.</p>
+  </div>
+
+  <footer class="colofone">
+    <span>Spazio23</span><span>via di Monte del Gallo 23, Roma</span><span>#spazio23</span>
+  </footer>
+</div>
+
+<dialog id="dlg"><div class="scheda" id="scheda"></div></dialog>
+
+<script>
+(function(){
+  var TELEFONO = "393286259190";
+
+  var EVENTI = [
+    {titolo:"Open Day di Spazio 23", data:"2026-09-29", ora:"19:30", tipo:"openday",
+     luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma",
+     ingresso:"gratuito, prenotazione obbligatoria",
+     racconto:"Spazio 23 riapre le porte e presenta i suoi percorsi: astrologia, meditazione e yoga, geometria sacra e archeosofia. Alle 21 la serata si chiude con un ascolto guidato: <em>Il viaggio dell'eroe</em>, i segreti delle colonne sonore."},
+    {titolo:"Colore e Musica — conferenza 1", data:"2026-10-17", ora:"16:00", tipo:"conferenza",
+     relatori:"Dario Patriarchi", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"},
+    {titolo:"Laboratorio di Geometria Sacra 1", data:"2026-10-31", ora:"10:00", tipo:"lab",
+     relatori:"Sandra e Aga", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"},
+    {titolo:"Laboratorio di Geometria Sacra 2", data:"2026-11-14", ora:"10:00", tipo:"lab",
+     relatori:"Sandra e Aga", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"},
+    {titolo:"Colore e Musica — conferenza 2", data:"2026-11-21", ora:"16:00", tipo:"conferenza",
+     relatori:"Dario Patriarchi", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"},
+    {titolo:"Laboratorio di Geometria Sacra 3", data:"2026-11-28", ora:"10:00", tipo:"lab",
+     relatori:"Sandra e Aga", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"},
+    {titolo:"Laboratorio di Geometria Sacra 4", data:"2026-12-05", ora:"10:00", tipo:"lab",
+     relatori:"Sandra e Aga", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"},
+    {titolo:"Laboratorio di Geometria Sacra 5", data:"2026-12-12", ora:"10:00", tipo:"lab",
+     relatori:"Sandra e Aga", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"},
+    {titolo:"Colore e Musica — conferenza 3", data:"2026-12-19", ora:"16:00", tipo:"conferenza",
+     relatori:"Dario Patriarchi", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"},
+    {titolo:"Colore e Musica — conferenza 4", data:"2027-01-23", ora:"16:00", tipo:"conferenza",
+     relatori:"Dario Patriarchi", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"},
+    {titolo:"Guarire con le piante medicinali", data:"2027-01-28", ora:"19:00", tipo:"libro",
+     relatori:"Annalisa Gabrielli, farmacista e dottore di ricerca in chimica farmaceutica",
+     luogo:"Libreria Aseq", indirizzo:"via dei Sediari 10, Roma", ingresso:"libero"},
+    {titolo:"Tecniche di risveglio iniziatico", data:"2027-02-18", ora:"19:00", tipo:"libro",
+     relatori:"Silvia di Santo, Dario Patriarchi",
+     luogo:"Libreria Aseq", indirizzo:"via dei Sediari 10, Roma", ingresso:"libero"},
+    {titolo:"Il libro cristiano dei morti", data:"2027-03-18", ora:"19:00", tipo:"libro",
+     relatori:"Giancarlo Bongini, Antonino Savasta",
+     luogo:"Libreria Aseq", indirizzo:"via dei Sediari 10, Roma", ingresso:"libero"},
+    {titolo:"Spazio-tempo-energia", data:"2027-04-15", ora:"19:00", tipo:"libro",
+     relatori:"Daniele Corradetti, Francesco Masi",
+     luogo:"Libreria Aseq", indirizzo:"via dei Sediari 10, Roma", ingresso:"libero"}
+  ];
+
+  var CORSI = [
+    {titolo:"Astrologia base", tipo:"astro", giorno:1, ora:"20:30", docente:"Francesco Passarelli",
+     dal:"2026-09-30", al:"2026-12-31", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"},
+    {titolo:"Corso di meditazione", tipo:"medita", giorno:2, ora:"20:30", docente:"Francesco Masi",
+     dal:"2026-09-30", al:"2026-12-31", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"},
+    {titolo:"Hatha Yoga", tipo:"yoga", giorno:4, ora:"19:00", docente:"Valerio di Mario",
+     dal:"2026-09-30", al:"2026-12-31", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"},
+    {titolo:"Studio quaderni", tipo:"quaderni", giorno:4, ora:"21:00", docente:"",
+     dal:"2026-09-30", al:"2026-12-31", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"}
+  ];
+
+  var TIPI = {
+    astro:{eti:"Astrologia"}, medita:{eti:"Meditazione"}, yoga:{eti:"Yoga"},
+    quaderni:{eti:"Quaderni"}, conferenza:{eti:"Conferenza"}, lab:{eti:"Laboratorio"},
+    libro:{eti:"Presentazione"}, openday:{eti:"Open day"}, viaggio:{eti:"Viaggio"}, altro:{eti:"Altro"}
+  };
+  var SIMBOLI = {
+    astro:'<circle cx="12" cy="11" r="4"/><path d="M12 15v6M9.5 18h5"/><path d="M9 4.5a3 3 0 0 0 6 0"/>',
+    medita:'<circle cx="12" cy="5.4" r="2.4"/><path d="M12 9v5"/><path d="M12 14c-3 0-5.5 2-6.5 4.5h13C17.5 16 15 14 12 14z"/><path d="M5.5 13.5 9 15.5M18.5 13.5 15 15.5"/>',
+    yoga:'<circle cx="12" cy="4.6" r="2.2"/><path d="M12 7.2v7"/><path d="M12 8.6 7.5 4.2M12 8.6l4.5-4.4"/><path d="M12 14.2 8 20.5M12 14.2l4 6.3"/>',
+    quaderni:'<rect x="5" y="3.5" width="14" height="17" rx="1"/><path d="M8.5 3.5v17"/><path d="M11 8h5M11 11.5h5M11 15h3"/>',
+    conferenza:'<path d="M10 17V5.5l8-1.5v11"/><circle cx="7.6" cy="17.4" r="2.6"/><circle cx="15.6" cy="15.4" r="2.6"/>',
+    lab:'<circle cx="12" cy="8.4" r="4.6"/><circle cx="8.2" cy="14.6" r="4.6"/><circle cx="15.8" cy="14.6" r="4.6"/>',
+    libro:'<path d="M12 6.5C10 4.8 7.5 4.2 4.5 4.5v13c3-.3 5.5.3 7.5 2 2-1.7 4.5-2.3 7.5-2v-13c-3-.3-5.5.3-7.5 2z"/><path d="M12 6.5v13"/>',
+    openday:'<path d="M4 20.5h16"/><path d="M14.5 20.5V4.2L6.5 6v14.5"/><path d="M17.5 20.5V6.6"/><circle cx="12.6" cy="12.6" r=".9"/>',
+    viaggio:'<path d="M12 3 5.5 16h6.5z"/><path d="M13.5 8.5 18.5 16h-5"/><path d="M3.5 19.2c2 1.6 3.5 1.6 5.5 0s3.5-1.6 5.5 0 3.5 1.6 5.5 0"/>',
+    altro:'<path d="M12 4v16M4 12h16M6.6 6.6l10.8 10.8M17.4 6.6 6.6 17.4"/>'
+  };
+  var WA = '<path d="M20 12a8 8 0 0 1-11.9 7L4 20l1.1-4A8 8 0 1 1 20 12z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5"/>';
+
+  function tipoValido(t){ return SIMBOLI[t]?t:"altro" }
+  function simbolo(t,cls){
+    t=tipoValido(t);
+    return '<svg class="segno '+(cls||"")+'" viewBox="0 0 24 24" aria-hidden="true" fill="none" '+
+      'stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">'+SIMBOLI[t]+'</svg>';
+  }
+  function classeCol(t){ return "c-"+tipoValido(t) }
+
+  var MESI=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
+  var MESI_BREVI=["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
+  var GIORNI=["domenica","lunedì","martedì","mercoledì","giovedì","venerdì","sabato"];
+  var GIORNI_BREVI=["dom","lun","mar","mer","gio","ven","sab"];
+
+  var $=function(id){return document.getElementById(id)};
+  var vista="lista", ancora=new Date();
+  try{ vista=localStorage.getItem("s23v-vista")||"lista" }catch(e){}
+  try{
+    var chiesta=new URLSearchParams(location.search).get("vista");
+    if(chiesta==="mese"||chiesta==="lista") vista=chiesta;
+  }catch(e){}
+
+  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+  function oggiISO(){var d=new Date();
+    return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+  function iso(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+  function pezzi(s){var p=String(s||"").split("-");return {a:p[0]||"",m:parseInt(p[1],10)||1,g:p[2]||""}}
+  function dataParlata(s){var p=pezzi(s),d=new Date(s+"T12:00:00");
+    if(isNaN(d)) return s||"";
+    return GIORNI[d.getDay()]+" "+parseInt(p.g,10)+" "+MESI[p.m-1]+" "+p.a}
+  function periodoTesto(dal,al){
+    var f=function(s){var p=pezzi(s);return parseInt(p.g,10)+" "+(MESI_BREVI[p.m-1]||"")};
+    if(dal&&al) return "dal "+f(dal)+" al "+f(al);
+    if(dal) return "dal "+f(dal);
+    if(al) return "fino al "+f(al);
+    return "";
+  }
+  function link(ev, quando){
+    var m = "Ciao, vorrei prenotare un posto per «"+ev.titolo+"» di "+quando+(ev.ora?" alle "+ev.ora:"")+".";
+    return "https://wa.me/"+TELEFONO+"?text="+encodeURIComponent(m);
+  }
+  function bottonePrenota(ev, quando){
+    return '<a class="prenota" href="'+link(ev,quando)+'" target="_blank" rel="noopener">'+
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" '+
+      'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+WA+'</svg>Prenota un posto</a>';
+  }
+  function righeDati(ev){
+    var d=[];
+    if(ev.ora) d.push("ore "+ev.ora);
+    if(ev.luogo) d.push(ev.luogo);
+    if(ev.indirizzo) d.push(ev.indirizzo);
+    if(ev.ingresso) d.push("ingresso "+ev.ingresso);
+    return d.map(function(x){return "<span>"+esc(x)+"</span>"}).join("");
+  }
+
+  var oggi=oggiISO();
+  var future=EVENTI.filter(function(e){return (e.data||"")>=oggi})
+                   .sort(function(a,b){return a.data.localeCompare(b.data)});
+
+  /* ---------- lista ---------- */
+  $("serate").innerHTML = future.length ? future.map(function(s){
+    var p=pezzi(s.data), quando=dataParlata(s.data);
+    return '<article class="serata">'+
+      '<div class="data"><span class="giorno">'+esc(p.g)+'</span>'+
+        '<span class="mese">'+esc(MESI_BREVI[p.m-1]||"")+'</span>'+
+        '<span class="anno">'+esc(p.a)+'</span></div>'+
+      '<span class="'+classeCol(s.tipo)+'">'+simbolo(s.tipo)+'</span>'+
+      '<div class="corpo">'+
+        '<h3 class="titolo">'+esc(s.titolo)+'</h3>'+
+        (s.relatori?'<p class="relatori">con '+esc(s.relatori)+'</p>':'')+
+        '<div class="dati">'+righeDati(s)+'</div>'+
+        (s.racconto?'<p class="racconto">'+s.racconto+'</p>':'')+
+        (String(s.luogo||"").indexOf("Spazio")<0?'<p class="insieme">In collaborazione con Spazio23.</p>':'')+
+        bottonePrenota(s,quando)+
+      '</div></article>';
+  }).join("") : '<div class="nessuna">Al momento non ci sono appuntamenti in programma. Torna a trovarci.</div>';
+
+  $("corsi").innerHTML = CORSI.map(function(c){
+    return '<div class="corso">'+
+      '<span class="'+classeCol(c.tipo)+'">'+simbolo(c.tipo)+'</span>'+
+      '<span class="gg">'+esc(GIORNI_BREVI[c.giorno])+'</span>'+
+      '<span class="oo">'+esc(c.ora)+'</span>'+
+      '<span class="cosa">'+esc(c.titolo)+
+        (c.docente?' <span class="chi">con '+esc(c.docente)+'</span>':'')+
+        ' <span class="chi">· '+esc(periodoTesto(c.dal,c.al))+'</span></span>'+
+    '</div>';
+  }).join("");
+
+  /* ---------- mese ---------- */
+  function corsiDi(s){
+    var gg=new Date(s+"T12:00:00").getDay();
+    return CORSI.filter(function(c){
+      return c.giorno===gg && (!c.dal||s>=c.dal) && (!c.al||s<=c.al);
+    }).map(function(c,i){
+      return {chiave:"c"+i+":"+s, corso:true, titolo:c.titolo, ora:c.ora, tipo:c.tipo,
+        relatori:c.docente, luogo:c.luogo, indirizzo:c.indirizzo, data:s};
+    });
+  }
+  function delGiorno(s){
+    var ev=EVENTI.filter(function(e){return e.data===s}).map(function(e,i){
+      var o={}; for(var k in e) o[k]=e[k]; o.chiave="e"+i+":"+s; return o;
+    });
+    return ev.concat(corsiDi(s)).sort(function(a,b){
+      return String(a.ora||"99").localeCompare(String(b.ora||"99"))});
+  }
+  var scheda={};
+  function pastiglia(ev){
+    scheda[ev.chiave]=ev;
+    return '<button class="pastiglia '+classeCol(ev.tipo)+(ev.corso?" corso":"")+'" '+
+      'data-apri="'+esc(ev.chiave)+'" title="'+esc((ev.ora?ev.ora+" — ":"")+ev.titolo)+'">'+
+      simbolo(ev.tipo)+(ev.ora?'<span class="ora">'+esc(ev.ora)+'</span>':'<span class="ora"></span>')+
+      '<span class="testo">'+esc(ev.titolo)+'</span></button>';
+  }
+  function disegnaMese(){
+    var anno=ancora.getFullYear(), mese=ancora.getMonth();
+    $("mese-nome").textContent=MESI[mese]+" "+anno;
+    $("etich-prima").textContent=MESI[(mese+11)%12].slice(0,3);
+    $("etich-dopo").textContent=MESI[(mese+1)%12].slice(0,3);
+    var primo=new Date(anno,mese,1), ultimo=new Date(anno,mese+1,0);
+    var off=(primo.getDay()+6)%7, partenza=new Date(primo); partenza.setDate(1-off);
+    var celle=Math.ceil((off+ultimo.getDate())/7)*7, oggiS=oggiISO();
+    var testa=["lun","mar","mer","gio","ven","sab","dom"].map(function(g,k){
+      return '<div class="intestazione-gg'+(k>4?" fine":"")+'">'+g+'</div>'}).join("");
+    var corpo="", blocchi="";
+    for(var i=0;i<celle;i++){
+      var d=new Date(partenza); d.setDate(partenza.getDate()+i);
+      var s=iso(d), fuori=d.getMonth()!==mese, festivo=(d.getDay()===0||d.getDay()===6);
+      var evs=delGiorno(s), mostrati=evs.slice(0,3), restanti=evs.length-mostrati.length;
+      corpo+='<div class="cella'+(fuori?" fuori":"")+(festivo?" festivo":"")+(s===oggiS?" oggi":"")+'">'+
+        '<span class="numero">'+d.getDate()+'</span>'+mostrati.map(pastiglia).join("")+
+        (restanti>0?'<button class="ancora" data-giorno="'+s+'">+'+restanti+' altri</button>':'')+'</div>';
+      if(!fuori && evs.length){
+        blocchi+='<div class="blocco'+(s===oggiS?" oggi":"")+'">'+
+          '<div class="bg-data"><span class="bg-num">'+d.getDate()+'</span>'+
+          '<span class="bg-gg">'+GIORNI_BREVI[d.getDay()]+'</span></div>'+
+          '<div class="bg-eventi">'+evs.map(pastiglia).join("")+'</div></div>';
+      }
+    }
+    $("griglia").innerHTML=testa+corpo;
+    $("blocchi").innerHTML=blocchi||'<div class="vuoto">In questo mese non c\'è niente in programma.</div>';
+    var usati={};
+    EVENTI.forEach(function(e){usati[tipoValido(e.tipo)]=1});
+    CORSI.forEach(function(c){usati[tipoValido(c.tipo)]=1});
+    $("legenda").innerHTML=Object.keys(usati).map(function(t){
+      return '<span class="'+classeCol(t)+'">'+simbolo(t)+'<span style="color:var(--lieve)">'+
+        esc(TIPI[t].eti)+'</span></span>'}).join("");
+  }
+
+  function applicaVista(){
+    var mese=vista==="mese";
+    $("vista-mese").hidden=!mese;
+    $("vista-lista").hidden=mese;
+    var disegno = mese ? '<path d="M4 6h16M4 12h16M4 18h16"/>'
+      : '<rect x="3.5" y="4.5" width="17" height="16"/><path d="M3.5 9.5h17M9 9.5v11M15 9.5v11M3.5 15h17"/>';
+    $("btn-vista").innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" '+
+      'stroke="currentColor" stroke-width="1.5" stroke-linecap="round">'+disegno+'</svg>'+
+      '<span>'+(mese?"Lista":"Mese")+'</span>';
+    if(mese) disegnaMese();
+  }
+
+  $("btn-vista").addEventListener("click",function(){
+    vista = vista==="mese"?"lista":"mese";
+    try{ localStorage.setItem("s23v-vista",vista) }catch(e){}
+    applicaVista();
+  });
+  $("mese-prima").addEventListener("click",function(){ancora=new Date(ancora.getFullYear(),ancora.getMonth()-1,1);disegnaMese()});
+  $("mese-dopo").addEventListener("click",function(){ancora=new Date(ancora.getFullYear(),ancora.getMonth()+1,1);disegnaMese()});
+  $("mese-oggi").addEventListener("click",function(){ancora=new Date();disegnaMese()});
+
+  document.addEventListener("click",function(e){
+    if(!e.target.closest) return;
+    var piu=e.target.closest("[data-giorno]");
+    if(piu){
+      var giorno=piu.getAttribute("data-giorno"), cella=piu.parentNode;
+      cella.innerHTML='<span class="numero">'+parseInt(giorno.slice(8),10)+'</span>'+
+        delGiorno(giorno).map(pastiglia).join("");
+      return;
+    }
+    var b=e.target.closest("[data-apri]");
+    if(!b) return;
+    var ev=scheda[b.getAttribute("data-apri")];
+    if(!ev) return;
+    var quando=dataParlata(ev.data);
+    $("scheda").innerHTML='<button class="chiudi" id="chiudi" aria-label="Chiudi">×</button>'+
+      '<h3 class="titolo"><span class="'+classeCol(ev.tipo)+'">'+simbolo(ev.tipo)+'</span> '+esc(ev.titolo)+'</h3>'+
+      '<p class="relatori">'+esc(quando)+(ev.relatori?" · con "+esc(ev.relatori):"")+'</p>'+
+      '<div class="dati">'+righeDati(ev)+'</div>'+
+      (ev.racconto?'<p class="racconto">'+ev.racconto+'</p>':'')+
+      bottonePrenota(ev,quando);
+    $("dlg").showModal();
+    document.getElementById("chiudi").addEventListener("click",function(){$("dlg").close()});
+  });
+
+  applicaVista();
+})();
+</script>
+
+</body>
+</html>
