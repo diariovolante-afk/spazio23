@@ -105,7 +105,7 @@
   .prenota svg{width:16px;height:16px}
 
   .corsi{display:flex;flex-direction:column;margin-bottom:34px}
-  .corso{display:grid;grid-template-columns:30px 52px 62px 1fr;gap:0 14px;align-items:center;
+  .corso{display:grid;grid-template-columns:30px 52px 62px 1fr auto;gap:0 14px;align-items:center;
     padding:11px 0;border-bottom:1px solid var(--riga)}
   .corso .segno{width:24px;height:24px}
   .corso .gg{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
@@ -113,6 +113,25 @@
   .corso .oo{font-family:"IBM Plex Mono",monospace;font-size:13px;font-variant-numeric:tabular-nums}
   .corso .cosa{font-size:19px}
   .corso .chi{font-style:italic;color:var(--lieve);font-size:16px}
+  .nota-corsi{margin:10px 0 4px;color:var(--lieve);font-style:italic;max-width:38em}
+  .nota-corsi strong{font-style:normal;font-weight:500;color:var(--inchiostro)}
+  .lezione{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;padding:9px 14px;background:transparent;color:var(--inchiostro);
+    border:1px solid var(--inchiostro);cursor:pointer;white-space:nowrap;
+    display:inline-flex;gap:7px;align-items:center}
+  .lezione svg{width:15px;height:15px}
+  .lezione:hover{background:var(--inchiostro);color:var(--carta)}
+  .lezione:focus-visible{outline:2px solid var(--oro);outline-offset:3px}
+  .avviso-lez{margin:0 0 14px;padding:10px 12px;border-left:3px solid var(--oro);
+    background:var(--velo);font-size:16px}
+  .scheda .titolo .segno{width:28px;height:28px;vertical-align:-4px;margin-right:4px}
+  .date-lez{list-style:none;margin:0;padding:0;border-top:1px solid var(--riga)}
+  .date-lez li{border-bottom:1px solid var(--riga)}
+  .date-lez a{display:flex;justify-content:space-between;align-items:center;gap:12px;
+    padding:12px 4px;color:var(--inchiostro);text-decoration:none;font-size:18px}
+  .date-lez a span{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--oro);white-space:nowrap}
+  .date-lez a:hover{background:var(--velo)}
 
   .mese-testata{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
   .mese-nome{font-family:"Cormorant Garamond",Georgia,serif;font-size:34px;line-height:1;
@@ -210,6 +229,7 @@
     .corso{grid-template-columns:26px 44px 1fr;gap:2px 10px}
     .corso .oo{grid-column:2}
     .corso .cosa{grid-column:3;grid-row:1}
+    .corso .lezione{grid-column:3;grid-row:2;justify-self:start;margin-top:6px}
   }
   @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -229,6 +249,7 @@
 
   <div id="vista-lista">
     <h2 class="sezione">Ogni settimana</h2>
+    <p class="nota-corsi"><strong>Puoi venire anche a una lezione sola</strong>, senza iscriverti a tutto il corso: premi <em>Prenota una lezione</em>, scegli la data e prenoti solo quella.</p>
     <div class="corsi" id="corsi"></div>
     <h2 class="sezione">Prossimi appuntamenti</h2>
     <div id="serate"></div>
@@ -252,7 +273,7 @@
 
   <div class="coda">
     <p class="scritta">Per esserci</p>
-    <p>Premi <em>Prenota un posto</em> sull'appuntamento che ti interessa: si apre WhatsApp con il messaggio già pronto, tu premi invio. I posti sono limitati.</p>
+    <p>Premi <em>Prenota un posto</em> sull'appuntamento che ti interessa: si apre WhatsApp con il messaggio già pronto, tu premi invio. Per i corsi di ogni settimana prenoti una lezione alla volta, quella che scegli. I posti sono limitati.</p>
   </div>
 
   <footer class="colofone">
@@ -371,13 +392,17 @@
     return "";
   }
   function link(ev, quando){
+    if(ev.corso){
+      var ml = "Ciao, vorrei prenotare una lezione di «"+ev.titolo+"», quella di "+quando+(ev.ora?" alle "+ev.ora:"")+" (solo questa lezione).";
+      return "https://wa.me/"+TELEFONO+"?text="+encodeURIComponent(ml);
+    }
     var m = "Ciao, vorrei prenotare un posto per «"+ev.titolo+"» di "+quando+(ev.ora?" alle "+ev.ora:"")+".";
     return "https://wa.me/"+TELEFONO+"?text="+encodeURIComponent(m);
   }
   function bottonePrenota(ev, quando){
     return '<a class="prenota" href="'+link(ev,quando)+'" target="_blank" rel="noopener">'+
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" '+
-      'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+WA+'</svg>Prenota un posto</a>';
+      'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+WA+'</svg>'+(ev.corso?'Prenota questa lezione':'Prenota un posto')+'</a>';
   }
   function righeDati(ev){
     var d=[];
@@ -410,7 +435,7 @@
       '</div></article>';
   }).join("") : '<div class="nessuna">Al momento non ci sono appuntamenti in programma. Torna a trovarci.</div>';
 
-  $("corsi").innerHTML = CORSI.map(function(c){
+  $("corsi").innerHTML = CORSI.map(function(c,i){
     return '<div class="corso">'+
       '<span class="'+classeCol(c.tipo)+'">'+simbolo(c.tipo)+'</span>'+
       '<span class="gg">'+esc(GIORNI_BREVI[c.giorno])+'</span>'+
@@ -418,8 +443,39 @@
       '<span class="cosa">'+esc(c.titolo)+
         (c.docente?' <span class="chi">con '+esc(c.docente)+'</span>':'')+
         ' <span class="chi">· '+esc(periodoTesto(c.dal,c.al))+'</span></span>'+
+      '<button class="lezione" data-corso="'+i+'">'+
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" '+
+        'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+WA+'</svg>Prenota una lezione</button>'+
     '</div>';
   }).join("");
+
+  function prossimeLezioni(c, quante){
+    var d=new Date(), fuori=[], giri=0;
+    d.setHours(12,0,0,0);
+    while(fuori.length<quante && giri<400){
+      var s=iso(d);
+      if(c.al && s>c.al) break;
+      if(d.getDay()===c.giorno && (!c.dal||s>=c.dal)) fuori.push(s);
+      d.setDate(d.getDate()+1); giri++;
+    }
+    return fuori;
+  }
+  function apriCorso(i){
+    var c=CORSI[i]; if(!c) return;
+    var date=prossimeLezioni(c,6);
+    var ev={titolo:c.titolo, ora:c.ora, corso:true};
+    $("scheda").innerHTML='<button class="chiudi" id="chiudi" aria-label="Chiudi">×</button>'+
+      '<h3 class="titolo"><span class="'+classeCol(c.tipo)+'">'+simbolo(c.tipo)+'</span> '+esc(c.titolo)+'</h3>'+
+      '<p class="relatori">ogni '+esc(GIORNI[c.giorno])+(c.ora?' alle '+esc(c.ora):'')+(c.docente?' · con '+esc(c.docente):'')+'</p>'+
+      '<p class="avviso-lez">Prenoti <strong>una lezione sola</strong>, non tutto il corso. Scegli la data: si apre WhatsApp con il messaggio già pronto.</p>'+
+      (date.length?'<ul class="date-lez">'+date.map(function(s){
+        var q=dataParlata(s);
+        return '<li><a href="'+link(ev,q)+'" target="_blank" rel="noopener">'+esc(q.replace(/ \d{4}$/,""))+
+          '<span>Prenota</span></a></li>';
+      }).join("")+'</ul>':'<p class="nessuna">Per ora non ci sono altre date in calendario.</p>');
+    $("dlg").showModal();
+    document.getElementById("chiudi").addEventListener("click",function(){$("dlg").close()});
+  }
 
   /* ---------- mese ---------- */
   function corsiDi(s){
@@ -511,6 +567,8 @@
         delGiorno(giorno).map(pastiglia).join("");
       return;
     }
+    var tc=e.target.closest("[data-corso]");
+    if(tc){ apriCorso(parseInt(tc.getAttribute("data-corso"),10)); return; }
     var b=e.target.closest("[data-apri]");
     if(!b) return;
     var ev=scheda[b.getAttribute("data-apri")];
@@ -521,6 +579,7 @@
       '<p class="relatori">'+esc(quando)+(ev.relatori?" · con "+esc(ev.relatori):"")+'</p>'+
       '<div class="dati">'+righeDati(ev)+'</div>'+
       (ev.racconto?'<p class="racconto">'+ev.racconto+'</p>':'')+
+      (ev.corso?'<p class="avviso-lez">Prenoti <strong>solo questa lezione</strong>, non tutto il corso.</p>':'')+
       bottonePrenota(ev,quando);
     $("dlg").showModal();
     document.getElementById("chiudi").addEventListener("click",function(){$("dlg").close()});
