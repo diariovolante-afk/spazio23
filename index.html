@@ -125,13 +125,17 @@
   .avviso-lez{margin:0 0 14px;padding:10px 12px;border-left:3px solid var(--oro);
     background:var(--velo);font-size:16px}
   .scheda .titolo .segno{width:28px;height:28px;vertical-align:-4px;margin-right:4px}
-  .date-lez{list-style:none;margin:0;padding:0;border-top:1px solid var(--riga)}
-  .date-lez li{border-bottom:1px solid var(--riga)}
-  .date-lez a{display:flex;justify-content:space-between;align-items:center;gap:12px;
-    padding:12px 4px;color:var(--inchiostro);text-decoration:none;font-size:18px}
-  .date-lez a span{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;
-    text-transform:uppercase;color:var(--oro);white-space:nowrap}
-  .date-lez a:hover{background:var(--velo)}
+  .scelte{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+  .scelta{background:var(--carta);border:1px solid var(--riga);padding:14px 16px 16px}
+  .scelta-quando{font-size:16.5px;color:var(--lieve);margin:0 0 2px}
+  .scelta-quando b{font-weight:500;color:var(--oro)}
+  .scelta-tema{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;font-size:23px;
+    line-height:1.15;margin:0 0 12px;text-wrap:balance}
+  .scelta .prenota{width:100%;justify-content:center;font-size:12.5px;padding:13px 16px}
+  .tema-lez{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;font-size:22px;
+    line-height:1.2;margin:4px 0 12px}
+  .tema-lez b{display:block;font-family:"EB Garamond",Georgia,serif;font-weight:400;
+    font-size:15.5px;color:var(--oro)}
 
   .mese-testata{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
   .mese-nome{font-family:"Cormorant Garamond",Georgia,serif;font-size:34px;line-height:1;
@@ -325,8 +329,20 @@
   ];
 
   var CORSI = [
-    {titolo:"Astrologia base", tipo:"astro", giorno:1, ora:"20:30", docente:"Francesco Passarelli",
-     dal:"2026-09-30", al:"2026-12-31", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"},
+    {titolo:"Astrologia base", corto:"Astrologia", tipo:"astro", giorno:1, ora:"20:30", docente:"Francesco Passarelli",
+     dal:"2026-10-05", al:"2026-12-07", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma",
+     lezioni:[
+       {data:"2026-10-05", tema:"Introduzione, cenni di astronomia, tra miti e tradizioni"},
+       {data:"2026-10-12", tema:"I quattro elementi e i temperamenti"},
+       {data:"2026-10-19", tema:"I pianeti: settenario classico e pianeti moderni"},
+       {data:"2026-10-26", tema:"Dignità e debilità essenziali ed accidentali"},
+       {data:"2026-11-02", tema:"I segni zodiacali, polarità e qualità"},
+       {data:"2026-11-09", tema:"Gli aspetti planetari maggiori e minori"},
+       {data:"2026-11-16", tema:"Le case astrologiche"},
+       {data:"2026-11-23", tema:"Dominante zodiacale, dominante planetaria"},
+       {data:"2026-11-30", tema:"Studio e interpretazione: laboratorio pratico"},
+       {data:"2026-12-07", tema:"Transiti planetari come strumento di crescita"}
+     ]},
     {titolo:"Corso di meditazione", tipo:"medita", giorno:2, ora:"20:30", docente:"Francesco Masi",
      dal:"2026-09-30", al:"2026-12-31", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"},
     {titolo:"Hatha Yoga", tipo:"yoga", giorno:4, ora:"19:00", docente:"Valerio di Mario",
@@ -393,7 +409,8 @@
   }
   function link(ev, quando){
     if(ev.corso){
-      var ml = "Ciao, vorrei prenotare una lezione di «"+ev.titolo+"», quella di "+quando+(ev.ora?" alle "+ev.ora:"")+" (solo questa lezione).";
+      var ml = "Ciao, vorrei prenotare solo la lezione di «"+ev.titolo+"» di "+quando+(ev.ora?" alle "+ev.ora:"")+
+        (ev.tema?": «"+ev.tema+"»":"")+".";
       return "https://wa.me/"+TELEFONO+"?text="+encodeURIComponent(ml);
     }
     var m = "Ciao, vorrei prenotare un posto per «"+ev.titolo+"» di "+quando+(ev.ora?" alle "+ev.ora:"")+".";
@@ -442,7 +459,7 @@
       '<span class="oo">'+esc(c.ora)+'</span>'+
       '<span class="cosa">'+esc(c.titolo)+
         (c.docente?' <span class="chi">con '+esc(c.docente)+'</span>':'')+
-        ' <span class="chi">· '+esc(periodoTesto(c.dal,c.al))+'</span></span>'+
+        ' <span class="chi">· '+(c.lezioni?c.lezioni.length+' lezioni, ':'')+esc(periodoTesto(c.dal,c.al))+'</span></span>'+
       '<button class="lezione" data-corso="'+i+'">'+
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" '+
         'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+WA+'</svg>Prenota una lezione</button>'+
@@ -450,29 +467,40 @@
   }).join("");
 
   function prossimeLezioni(c, quante){
+    var oggiS=oggiISO();
+    if(c.lezioni) return c.lezioni.map(function(l,k){
+      return {data:l.data, tema:l.tema, n:k+1, di:c.lezioni.length};
+    }).filter(function(l){return l.data>=oggiS}).slice(0,quante);
     var d=new Date(), fuori=[], giri=0;
     d.setHours(12,0,0,0);
     while(fuori.length<quante && giri<400){
       var s=iso(d);
       if(c.al && s>c.al) break;
-      if(d.getDay()===c.giorno && (!c.dal||s>=c.dal)) fuori.push(s);
+      if(d.getDay()===c.giorno && (!c.dal||s>=c.dal)) fuori.push({data:s});
       d.setDate(d.getDate()+1); giri++;
     }
     return fuori;
   }
   function apriCorso(i){
     var c=CORSI[i]; if(!c) return;
-    var date=prossimeLezioni(c,6);
-    var ev={titolo:c.titolo, ora:c.ora, corso:true};
+    var date=prossimeLezioni(c, c.lezioni?c.lezioni.length:6);
     $("scheda").innerHTML='<button class="chiudi" id="chiudi" aria-label="Chiudi">×</button>'+
       '<h3 class="titolo"><span class="'+classeCol(c.tipo)+'">'+simbolo(c.tipo)+'</span> '+esc(c.titolo)+'</h3>'+
       '<p class="relatori">ogni '+esc(GIORNI[c.giorno])+(c.ora?' alle '+esc(c.ora):'')+(c.docente?' · con '+esc(c.docente):'')+'</p>'+
-      '<p class="avviso-lez">Prenoti <strong>una lezione sola</strong>, non tutto il corso. Scegli la data: si apre WhatsApp con il messaggio già pronto.</p>'+
-      (date.length?'<ul class="date-lez">'+date.map(function(s){
-        var q=dataParlata(s);
-        return '<li><a href="'+link(ev,q)+'" target="_blank" rel="noopener">'+esc(q.replace(/ \d{4}$/,""))+
-          '<span>Prenota</span></a></li>';
-      }).join("")+'</ul>':'<p class="nessuna">Per ora non ci sono altre date in calendario.</p>');
+      '<p class="avviso-lez">'+(c.lezioni?'Ogni lezione ha il suo argomento. ':'')+
+        'Scegli la lezione che ti interessa e premi il suo tasto <strong>Prenota questa lezione</strong>. '+
+        'Si apre WhatsApp con il messaggio già scritto: devi solo inviarlo. Prenoti <strong>solo quella lezione</strong>, non tutto il corso.</p>'+
+      (date.length?'<ol class="scelte">'+date.map(function(l){
+        var q=dataParlata(l.data), breve=q.replace(/ \d{4}$/,"");
+        var ev={titolo:c.titolo, ora:c.ora, corso:true, tema:l.tema};
+        return '<li class="scelta">'+
+          (l.tema
+            ? '<p class="scelta-quando"><b>Lezione '+l.n+' di '+l.di+'</b> · '+esc(breve)+(c.ora?', ore '+esc(c.ora):'')+'</p>'+
+              '<p class="scelta-tema">'+esc(l.tema)+'</p>'
+            : '<p class="scelta-tema">'+esc(breve)+'</p>'+
+              '<p class="scelta-quando" style="margin:-8px 0 12px">'+(c.ora?'ore '+esc(c.ora):'')+'</p>')+
+          bottonePrenota(ev,q)+'</li>';
+      }).join("")+'</ol>':'<p class="nessuna">Per ora non ci sono altre lezioni in calendario.</p>');
     $("dlg").showModal();
     document.getElementById("chiudi").addEventListener("click",function(){$("dlg").close()});
   }
@@ -483,9 +511,15 @@
     return CORSI.filter(function(c){
       return c.giorno===gg && (!c.dal||s>=c.dal) && (!c.al||s<=c.al);
     }).map(function(c,i){
-      return {chiave:"c"+i+":"+s, corso:true, titolo:c.titolo, ora:c.ora, tipo:c.tipo,
+      var o={chiave:"c"+i+":"+s, corso:true, titolo:c.titolo, corto:c.corto, ora:c.ora, tipo:c.tipo,
         relatori:c.docente, luogo:c.luogo, indirizzo:c.indirizzo, data:s};
-    });
+      if(c.lezioni){
+        var k=c.lezioni.map(function(l){return l.data}).indexOf(s);
+        if(k<0) return null;
+        o.tema=c.lezioni[k].tema; o.n=k+1; o.di=c.lezioni.length;
+      }
+      return o;
+    }).filter(Boolean);
   }
   function delGiorno(s){
     var ev=EVENTI.filter(function(e){return e.data===s}).map(function(e,i){
@@ -500,7 +534,7 @@
     return '<button class="pastiglia '+classeCol(ev.tipo)+(ev.corso?" corso":"")+'" '+
       'data-apri="'+esc(ev.chiave)+'" title="'+esc((ev.ora?ev.ora+" — ":"")+ev.titolo)+'">'+
       simbolo(ev.tipo)+(ev.ora?'<span class="ora">'+esc(ev.ora)+'</span>':'<span class="ora"></span>')+
-      '<span class="testo">'+esc(ev.titolo)+'</span></button>';
+      '<span class="testo">'+esc(ev.tema?(ev.corto||ev.titolo)+": "+ev.tema:ev.titolo)+'</span></button>';
   }
   function disegnaMese(){
     var anno=ancora.getFullYear(), mese=ancora.getMonth();
@@ -579,6 +613,7 @@
       '<p class="relatori">'+esc(quando)+(ev.relatori?" · con "+esc(ev.relatori):"")+'</p>'+
       '<div class="dati">'+righeDati(ev)+'</div>'+
       (ev.racconto?'<p class="racconto">'+ev.racconto+'</p>':'')+
+      (ev.tema?'<p class="tema-lez"><b>Lezione '+ev.n+' di '+ev.di+'</b>'+esc(ev.tema)+'</p>':'')+
       (ev.corso?'<p class="avviso-lez">Prenoti <strong>solo questa lezione</strong>, non tutto il corso.</p>':'')+
       bottonePrenota(ev,quando);
     $("dlg").showModal();
