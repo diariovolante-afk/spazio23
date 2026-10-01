@@ -289,6 +289,8 @@
 
 <script>
 (function(){
+  /* numero di chi prende le prenotazioni. TELEFONO = David (quaderni, Aseq, serate);
+     i corsi e le conferenze hanno il numero del loro docente nel campo "tel". */
   var TELEFONO = "393286259190";
 
   var EVENTI = [
@@ -297,13 +299,13 @@
      ingresso:"gratuito, prenotazione obbligatoria",
      racconto:"Spazio 23 riapre le porte e presenta i suoi percorsi: astrologia, meditazione e yoga, geometria sacra e archeosofia. Alle 21 la serata si chiude con un ascolto guidato: <em>Il viaggio dell'eroe</em>, i segreti delle colonne sonore."},
     {titolo:"Arte sacra — L'arte sacra", data:"2026-10-17", ora:"16:00", tipo:"conferenza",
-     relatori:"Dario Patriarchi", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"},
+     relatori:"Dario Patriarchi", tel:"393924432893", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"},
     {titolo:"Laboratorio di Geometria Sacra 1", data:"2026-10-31", ora:"10:00", tipo:"lab",
      relatori:"Sandra e Aga", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"},
     {titolo:"Laboratorio di Geometria Sacra 2", data:"2026-11-14", ora:"10:00", tipo:"lab",
      relatori:"Sandra e Aga", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"},
     {titolo:"Arte sacra — Musica e canto", data:"2026-11-21", ora:"16:00", tipo:"conferenza",
-     relatori:"Dario Patriarchi", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"},
+     relatori:"Dario Patriarchi", tel:"393924432893", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"},
     {titolo:"Laboratorio di Geometria Sacra 3", data:"2026-11-28", ora:"10:00", tipo:"lab",
      relatori:"Sandra e Aga", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"},
     {titolo:"Laboratorio di Geometria Sacra 4", data:"2026-12-05", ora:"10:00", tipo:"lab",
@@ -311,9 +313,9 @@
     {titolo:"Laboratorio di Geometria Sacra 5", data:"2026-12-12", ora:"10:00", tipo:"lab",
      relatori:"Sandra e Aga", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"},
     {titolo:"Arte sacra — Iconografia", data:"2026-12-19", ora:"16:00", tipo:"conferenza",
-     relatori:"Dario Patriarchi", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"},
+     relatori:"Dario Patriarchi", tel:"393924432893", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"},
     {titolo:"Arte sacra — Oriente/Occidente", data:"2027-01-23", ora:"16:00", tipo:"conferenza",
-     relatori:"Dario Patriarchi", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"},
+     relatori:"Dario Patriarchi", tel:"393924432893", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"},
     {titolo:"Guarire con le piante medicinali", data:"2027-01-28", ora:"19:00", tipo:"libro",
      relatori:"Annalisa Gabrielli, farmacista e dottore di ricerca in chimica farmaceutica",
      luogo:"Libreria Aseq", indirizzo:"via dei Sediari 10, Roma", ingresso:"libero"},
@@ -329,7 +331,7 @@
   ];
 
   var CORSI = [
-    {titolo:"Astrologia base", corto:"Astrologia", tipo:"astro", giorno:1, ora:"20:30", docente:"Francesco Passarelli",
+    {titolo:"Astrologia base", corto:"Astrologia", tipo:"astro", giorno:1, ora:"20:30", docente:"Francesco Passarelli", tel:"393495634102",
      dal:"2026-10-05", al:"2026-12-07", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma",
      lezioni:[
        {data:"2026-10-05", tema:"Introduzione, cenni di astronomia, tra miti e tradizioni"},
@@ -343,9 +345,9 @@
        {data:"2026-11-30", tema:"Studio e interpretazione: laboratorio pratico"},
        {data:"2026-12-07", tema:"Transiti planetari come strumento di crescita"}
      ]},
-    {titolo:"Corso di meditazione", tipo:"medita", giorno:2, ora:"20:30", docente:"Francesco Masi",
+    {titolo:"Corso di meditazione", tipo:"medita", giorno:2, ora:"20:30", docente:"Francesco Masi", tel:"393496794059",
      dal:"2026-09-30", al:"2026-12-31", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"},
-    {titolo:"Hatha Yoga", tipo:"yoga", giorno:4, ora:"19:00", docente:"Valerio di Mario",
+    {titolo:"Hatha Yoga", tipo:"yoga", giorno:4, ora:"19:00", docente:"Valerio di Mario", tel:"393392455582",
      dal:"2026-09-30", al:"2026-12-31", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"},
     {titolo:"Studio quaderni", tipo:"quaderni", giorno:4, ora:"21:00", docente:"",
      dal:"2026-09-30", al:"2026-12-31", luogo:"Spazio 23", indirizzo:"via di Monte del Gallo 23, Roma"}
@@ -408,13 +410,14 @@
     return "";
   }
   function link(ev, quando){
+    var tel = ev.tel || TELEFONO;
     if(ev.corso){
       var ml = "Ciao, vorrei prenotare solo la lezione di «"+ev.titolo+"» di "+quando+(ev.ora?" alle "+ev.ora:"")+
         (ev.tema?": «"+ev.tema+"»":"")+".";
-      return "https://wa.me/"+TELEFONO+"?text="+encodeURIComponent(ml);
+      return "https://wa.me/"+tel+"?text="+encodeURIComponent(ml);
     }
     var m = "Ciao, vorrei prenotare un posto per «"+ev.titolo+"» di "+quando+(ev.ora?" alle "+ev.ora:"")+".";
-    return "https://wa.me/"+TELEFONO+"?text="+encodeURIComponent(m);
+    return "https://wa.me/"+tel+"?text="+encodeURIComponent(m);
   }
   function bottonePrenota(ev, quando){
     return '<a class="prenota" href="'+link(ev,quando)+'" target="_blank" rel="noopener">'+
@@ -492,7 +495,7 @@
         'Si apre WhatsApp con il messaggio già scritto: devi solo inviarlo. Prenoti <strong>solo quella lezione</strong>, non tutto il corso.</p>'+
       (date.length?'<ol class="scelte">'+date.map(function(l){
         var q=dataParlata(l.data), breve=q.replace(/ \d{4}$/,"");
-        var ev={titolo:c.titolo, ora:c.ora, corso:true, tema:l.tema};
+        var ev={titolo:c.titolo, ora:c.ora, corso:true, tema:l.tema, tel:c.tel};
         return '<li class="scelta">'+
           (l.tema
             ? '<p class="scelta-quando"><b>Lezione '+l.n+' di '+l.di+'</b> · '+esc(breve)+(c.ora?', ore '+esc(c.ora):'')+'</p>'+
@@ -512,7 +515,7 @@
       return c.giorno===gg && (!c.dal||s>=c.dal) && (!c.al||s<=c.al);
     }).map(function(c,i){
       var o={chiave:"c"+i+":"+s, corso:true, titolo:c.titolo, corto:c.corto, ora:c.ora, tipo:c.tipo,
-        relatori:c.docente, luogo:c.luogo, indirizzo:c.indirizzo, data:s};
+        relatori:c.docente, tel:c.tel, luogo:c.luogo, indirizzo:c.indirizzo, data:s};
       if(c.lezioni){
         var k=c.lezioni.map(function(l){return l.data}).indexOf(s);
         if(k<0) return null;
