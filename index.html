@@ -103,6 +103,8 @@
   .prenota:hover{background:transparent;color:var(--inchiostro)}
   .prenota:focus-visible{outline:2px solid var(--oro);outline-offset:3px}
   .prenota svg{width:16px;height:16px}
+  .conta{margin:8px 0 0;font-style:italic;font-size:15.5px;color:var(--lieve)}
+  .conta b{font-style:normal;font-weight:500;color:var(--oro)}
 
   .corsi{display:flex;flex-direction:column;margin-bottom:34px}
   .corso{display:grid;grid-template-columns:30px 52px 62px 1fr auto;gap:0 14px;align-items:center;
@@ -419,10 +421,50 @@
     var m = "Ciao, vorrei prenotare un posto per «"+ev.titolo+"» di "+quando+(ev.ora?" alle "+ev.ora:"")+".";
     return "https://wa.me/"+tel+"?text="+encodeURIComponent(m);
   }
+  /* contatore di chi preme Prenota: un numero per ogni appuntamento (titolo + data),
+     tenuto dal servizio gratuito abacus. Lo stesso browser conta una volta sola. */
+  var CONTA_URL = "https://abacus.jasoncameron.dev/", CONTA_NS = "spazio23-prenota";
+  var conti = {};
+  function chiaveConta(ev){
+    var t = String(ev.titolo||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"")
+      .replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,40);
+    return t+"-"+(ev.data||"");
+  }
+  function testoConta(n){
+    return n===1 ? '<b>1</b> persona ha già chiesto un posto'
+                 : '<b>'+n+'</b> persone hanno già chiesto un posto';
+  }
+  function mostraConta(k){
+    var n=conti[k];
+    [].forEach.call(document.querySelectorAll('[data-conta-n="'+k+'"]'),function(el){
+      if(n>0){ el.innerHTML=testoConta(n); el.hidden=false } else el.hidden=true;
+    });
+  }
+  function aggiornaConti(){
+    var fatte={};
+    [].forEach.call(document.querySelectorAll("[data-conta-n]"),function(el){
+      var k=el.getAttribute("data-conta-n");
+      if(fatte[k]) return; fatte[k]=1;
+      if(k in conti){ mostraConta(k); return }
+      fetch(CONTA_URL+"get/"+CONTA_NS+"/"+k).then(function(r){return r.json()})
+        .then(function(j){ conti[k]=j.value||0; mostraConta(k) }).catch(function(){});
+    });
+  }
+  function contaPrenota(k){
+    var gia={};
+    try{ gia=JSON.parse(localStorage.getItem("s23v-prenotati")||"{}") }catch(e){}
+    if(gia[k]) return;
+    gia[k]=1;
+    try{ localStorage.setItem("s23v-prenotati",JSON.stringify(gia)) }catch(e){}
+    fetch(CONTA_URL+"hit/"+CONTA_NS+"/"+k,{keepalive:true}).then(function(r){return r.json()})
+      .then(function(j){ if(j.value){ conti[k]=j.value; mostraConta(k) } }).catch(function(){});
+  }
   function bottonePrenota(ev, quando){
-    return '<a class="prenota" href="'+link(ev,quando)+'" target="_blank" rel="noopener">'+
+    var k=chiaveConta(ev);
+    return '<a class="prenota" data-conta="'+k+'" href="'+link(ev,quando)+'" target="_blank" rel="noopener">'+
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" '+
-      'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+WA+'</svg>'+(ev.corso?'Prenota questa lezione':'Prenota un posto')+'</a>';
+      'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+WA+'</svg>'+(ev.corso?'Prenota questa lezione':'Prenota un posto')+'</a>'+
+      '<p class="conta" data-conta-n="'+k+'" hidden></p>';
   }
   function righeDati(ev){
     var d=[];
@@ -454,6 +496,7 @@
         bottonePrenota(s,quando)+
       '</div></article>';
   }).join("") : '<div class="nessuna">Al momento non ci sono appuntamenti in programma. Torna a trovarci.</div>';
+  aggiornaConti();
 
   $("corsi").innerHTML = CORSI.map(function(c,i){
     return '<div class="corso">'+
@@ -495,7 +538,7 @@
         'Si apre WhatsApp con il messaggio già scritto: devi solo inviarlo. Prenoti <strong>solo quella lezione</strong>, non tutto il corso.</p>'+
       (date.length?'<ol class="scelte">'+date.map(function(l){
         var q=dataParlata(l.data), breve=q.replace(/ \d{4}$/,"");
-        var ev={titolo:c.titolo, ora:c.ora, corso:true, tema:l.tema, tel:c.tel};
+        var ev={titolo:c.titolo, ora:c.ora, corso:true, tema:l.tema, tel:c.tel, data:l.data};
         return '<li class="scelta">'+
           (l.tema
             ? '<p class="scelta-quando"><b>Lezione '+l.n+' di '+l.di+'</b> · '+esc(breve)+(c.ora?', ore '+esc(c.ora):'')+'</p>'+
@@ -504,6 +547,7 @@
               '<p class="scelta-quando" style="margin:-8px 0 12px">'+(c.ora?'ore '+esc(c.ora):'')+'</p>')+
           bottonePrenota(ev,q)+'</li>';
       }).join("")+'</ol>':'<p class="nessuna">Per ora non ci sono altre lezioni in calendario.</p>');
+    aggiornaConti();
     $("dlg").showModal();
     document.getElementById("chiudi").addEventListener("click",function(){$("dlg").close()});
   }
@@ -597,6 +641,8 @@
 
   document.addEventListener("click",function(e){
     if(!e.target.closest) return;
+    var pr=e.target.closest("[data-conta]");
+    if(pr){ contaPrenota(pr.getAttribute("data-conta")); return; }
     var piu=e.target.closest("[data-giorno]");
     if(piu){
       var giorno=piu.getAttribute("data-giorno"), cella=piu.parentNode;
@@ -619,6 +665,7 @@
       (ev.tema?'<p class="tema-lez"><b>Lezione '+ev.n+' di '+ev.di+'</b>'+esc(ev.tema)+'</p>':'')+
       (ev.corso?'<p class="avviso-lez">Prenoti <strong>solo questa lezione</strong>, non tutto il corso.</p>':'')+
       bottonePrenota(ev,quando);
+    aggiornaConti();
     $("dlg").showModal();
     document.getElementById("chiudi").addEventListener("click",function(){$("dlg").close()});
   });
