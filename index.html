@@ -424,7 +424,12 @@
   /* contatore di chi preme Prenota: un numero per ogni appuntamento (titolo + data),
      tenuto dal servizio gratuito abacus. Lo stesso browser conta una volta sola. */
   var CONTA_URL = "https://abacus.jasoncameron.dev/", CONTA_NS = "spazio23-prenota";
+  /* numeri veri, scritti a mano da noi: vincono sul contatore. chiave -> persone prenotate.
+     es. "astrologia-base-2026-10-12": 5 */
+  var PRENOTATI = {
+  };
   var conti = {};
+  for(var kp in PRENOTATI) conti[kp]=PRENOTATI[kp];
   function chiaveConta(ev){
     var t = String(ev.titolo||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"")
       .replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,40);
@@ -457,7 +462,7 @@
     gia[k]=1;
     try{ localStorage.setItem("s23v-prenotati",JSON.stringify(gia)) }catch(e){}
     fetch(CONTA_URL+"hit/"+CONTA_NS+"/"+k,{keepalive:true}).then(function(r){return r.json()})
-      .then(function(j){ if(j.value){ conti[k]=j.value; mostraConta(k) } }).catch(function(){});
+      .then(function(j){ if(j.value && !(k in PRENOTATI)){ conti[k]=j.value; mostraConta(k) } }).catch(function(){});
   }
   function bottonePrenota(ev, quando){
     var k=chiaveConta(ev);
